@@ -27,3 +27,24 @@ resource "aws_s3_object" "sales_setup_metadata" {
   source = "../../document/sales/01_setup.md.metadata.json"
   key    = "sales/01_setup.md.metadata.json"
 }
+
+resource "aws_s3_object" "all_moved" {
+  bucket = module.datasource.bucket.id
+  source = "../../document/all/moved.md"
+  key    = "all/moved.md"
+}
+resource "aws_s3_object" "all_moved_metadata" {
+  bucket = module.datasource.bucket.id
+  source = "../../document/all/moved.md.metadata.json"
+  key    = "all/moved.md.metadata.json"
+}
+resource "aws_s3_object" "all_change_account" {
+  bucket = module.datasource.bucket.id
+  source = "../../document/all/change-account.md"
+  key    = "all/change-account.md"
+}
+resource "aws_s3_object" "all_change_account_metadata" {
+  bucket = module.datasource.bucket.id
+  source = "../../document/all/change-account.md.metadata.json"
+  key    = "all/change-account.md.metadata.json"
+}
