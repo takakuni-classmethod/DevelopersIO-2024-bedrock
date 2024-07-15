@@ -21,32 +21,32 @@
 
 画面上部から `SageMaker` と入力し、 Amazon SageMaker をクリックします。
 
-![](../images/01/01.png)
+![](./images/README/README.png)
 
 SageMaker コンソールに移動しドメイン、 `devio-2024` をクリックします。
 
-![](../images/01/02.png)
+![](./images/README/02.png)
 
 `ユーザープロファイル`から `devio-2024-user` の起動をクリック、パーソナルアプリケーションの `Studio` を選択します。（別タブに移動します。）
 
-![](../images/01/03.png)
+![](./images/README/03.png)
 
 ツアーはスキップします。
 
-![](../images/01/04.png)
+![](./images/README/04.png)
 
 Code Editor をクリックします。
 
-![](../images/01/05.png)
+![](./images/README/05.png)
 
 Name が `devio-2024-space` のスペースを起動します。
 
-![](../images/01/06.png)
+![](./images/README/06.png)
 
 Status が `Running` になったら、 Actions から `Open` をクリックします。（別タブに移動します。）
 
-![](../images/01/07.png)
+![](./images/README/07.png)
 
 Code Editor が起動したら、ラボ環境の立ち上げに成功です！
 
-![](../images/01/08.png)
+![](./images/README/08.png)
