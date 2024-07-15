@@ -23,6 +23,11 @@ resource "aws_iam_role_policy_attachment" "sagemaker_domain_bedrockfullaccess" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonBedrockFullAccess"
 }
 
+resource "aws_iam_role_policy_attachment" "sagemaker_domain_admin" {
+  role       = aws_iam_role.sagemaker_domain.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
 resource "aws_sagemaker_domain" "this" {
   domain_name             = local.prefix
   auth_mode               = "IAM"

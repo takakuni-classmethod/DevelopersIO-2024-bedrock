@@ -9,7 +9,7 @@ terraform {
 
 provider "aws" {
   # Configuration options
-  region = "ap-northeast-1"
+  region = "us-west-2"
 }
 
 data "aws_region" "this" {}
