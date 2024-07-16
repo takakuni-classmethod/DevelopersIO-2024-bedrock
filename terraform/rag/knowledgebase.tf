@@ -17,7 +17,7 @@ resource "aws_iam_role" "knowledge_bases" {
   name               = "${local.prefix}-kb-role"
   assume_role_policy = data.aws_iam_policy_document.assume_bedrock.json
   tags = {
-    Name = "${local.prefix}-knowledgebase"
+    Name = "${local.prefix}-kb-role"
   }
 }
 
@@ -121,8 +121,6 @@ resource "aws_bedrockagent_knowledge_base" "this" {
     }
   }
 
-
-
   storage_configuration {
     type = "OPENSEARCH_SERVERLESS"
     opensearch_serverless_configuration {
@@ -167,4 +165,39 @@ resource "aws_cloudwatch_log_group" "this_bedrock" {
 }
 resource "aws_cloudwatch_log_group" "this_knowledgebase" {
   name = "/aws/bedrock/${aws_bedrockagent_knowledge_base.this.name}"
+}
+
+########################################################
+# IAM Role for Bedrock Logging
+########################################################
+resource "aws_iam_role" "bedrock_logging" {
+  name               = "${local.prefix}-bedrock-log-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_bedrock.json
+  tags = {
+    Name = "${local.prefix}-bedrock-log-role"
+  }
+}
+
+data "aws_iam_policy_document" "bedrock_logging" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+    resources = [
+      aws_cloudwatch_log_group.this_bedrock.arn
+    ]
+  }
+}
+
+resource "aws_iam_policy" "bedrock_logging" {
+  name   = "${local.prefix}-bedrock-log-policy"
+  policy = data.aws_iam_policy_document.bedrock_logging.json
+}
+
+resource "aws_iam_role_policy_attachment" "bedrock_logging" {
+  role       = aws_iam_role.bedrock_logging.name
+  policy_arn = aws_iam_policy.bedrock_logging.arn
 }
