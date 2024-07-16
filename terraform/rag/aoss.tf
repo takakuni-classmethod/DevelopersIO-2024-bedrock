@@ -115,6 +115,36 @@ resource "opensearch_index" "this" {
   name          = "${local.prefix}-vector-index"
   index_knn     = true
   force_destroy = true
+  analysis_tokenizer = jsonencode({
+    custom_kuromoji_tokenizer = {
+      type = "kuromoji_tokenizer"
+      mode = "search"
+    }
+  })
+  analysis_filter = jsonencode({
+    custom_kuromoji_readingform = {
+      type       = "kuromoji_readingform"
+      use_romaji = true
+    }
+  })
+  analysis_analyzer = jsonencode({
+    custom_kuromoji_analyzer = {
+      type = "custom"
+      char_filter = [
+        "icu_normalizer",
+        "kuromoji_iteration_mark"
+      ]
+      tokenizer = "custom_kuromoji_tokenizer"
+      filter = [                       # Token Filter
+        "kuromoji_baseform",           # 基本形への変換 「美しかった」→「美しい」
+        "kuromoji_part_of_speech",     # 品詞除去 「寿司がおいしいね」→ [寿司, おいしい]
+        "ja_stop",                     # ストップワードの除去 これ、それ、あれ
+        "kuromoji_stemmer",            # 長音除去 サーバー → サーバ
+        "custom_kuromoji_readingform", # 読み仮名付与
+        "kuromoji_number"              # 漢数字の半角数字化
+      ],
+    }
+  })
   mappings = jsonencode({
     properties = {
       AMAZON_BEDROCK_METADATA = {
@@ -176,41 +206,6 @@ resource "opensearch_index" "this" {
       }
       year = {
         type = "long"
-      }
-    },
-    settings = {
-      index = {
-        analysis = {
-          tokenizer = {
-            custom_kuromoji_tokenizer = {
-              type = "kuromoji_tokenizer"
-              mode = "search"
-            }
-          },
-          filter = {
-            custom_kuromoji_readingform = {
-              type       = "kuromoji_readingform"
-              use_romaji = true
-            }
-          }
-          analyzer = {
-            custom_kuromoji_analyzer = {
-              tokenizer = "custom_kuromoji_tokenizer",
-              filter = [
-                "kuromoji_baseform",           # 基本形への変換 「美しかった」→「美しい」
-                "kuromoji_part_of_speech",     # 品詞除去 「寿司がおいしいね」→ [寿司, おいしい]
-                "ja_stop",                     # ストップワードの除去 これ、それ、あれ
-                "kuromoji_stemmer",            # 長音除去 サーバー → サーバ
-                "custom_kuromoji_readingform", # 読み仮名付与
-                "kuromoji_number"              # 漢数字の半角数字化
-              ],
-              char_filter = [
-                "icu_normalizer",
-                "kuromoji_iteration_mark"
-              ]
-            }
-          }
-        }
       }
     }
   })

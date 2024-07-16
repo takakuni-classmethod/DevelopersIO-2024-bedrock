@@ -1,0 +1,50 @@
+{
+	"mappings": {
+		"properties": {
+			"AMAZON_BEDROCK_METADATA": {
+				"type": "text",
+				"index": false
+			},
+			"AMAZON_BEDROCK_TEXT_CHUNK": {
+				"type": "text",
+				"analyzer": "custom_kuromoji_analyzer"
+			},
+			"bedrock-knowledge-base-default-vector": {
+				"type": "knn_vector",
+				"dimension": 1536,
+				"method": {
+					"engine": "nmslib",
+					"space_type": "cosinesimil",
+					"name": "hnsw",
+					"parameters": {}
+				}
+			},
+			"id": {
+				"type": "text",
+				"fields": {
+					"keyword": {
+						"type": "keyword",
+						"ignore_above": 256
+					}
+				}
+			}
+		}
+	},
+	"settings": {
+		"index": {
+			"knn.algo_param": {
+				"ef_search": "512"
+			},
+			"knn": "true",
+			"analysis": {
+				"analyzer": {
+					"custom_kuromoji_analyzer": {
+						"tokenizer": "kuromoji_tokenizer",
+						"filter": ["kuromoji_baseform", "ja_stop"],
+						"char_filter": ["icu_normalizer"]
+					}
+				}
+			}
+		}
+	}
+}
