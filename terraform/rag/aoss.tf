@@ -117,12 +117,13 @@ resource "opensearch_index" "this" {
   force_destroy = true
   mappings = jsonencode({
     properties = {
-      "AMAZON_BEDROCK_METADATA" = {
+      AMAZON_BEDROCK_METADATA = {
         type  = "text",
         index = false
       },
-      "AMAZON_BEDROCK_TEXT_CHUNK" = {
-        type = "text"
+      AMAZON_BEDROCK_TEXT_CHUNK = {
+        type     = "text",
+        analyzer = "kuromoji_analyzer"
       },
       "${local.prefix}-vector" = {
         type      = "knn_vector",
@@ -134,10 +135,10 @@ resource "opensearch_index" "this" {
           parameters = {}
         }
       },
-      "for_managers" = {
+      for_managers = {
         type = "boolean"
       },
-      "id" = {
+      id = {
         fields = {
           keyword = {
             ignore_above = 256
@@ -146,7 +147,7 @@ resource "opensearch_index" "this" {
         }
         type = "text"
       },
-      "target" = {
+      target = {
         fields = {
           keyword = {
             ignore_above = 256
@@ -155,7 +156,7 @@ resource "opensearch_index" "this" {
         }
         type = "text"
       },
-      "x-amz-bedrock-kb-data-source-id" = {
+      x-amz-bedrock-kb-data-source-id = {
         fields = {
           keyword = {
             ignore_above = 256
@@ -164,7 +165,7 @@ resource "opensearch_index" "this" {
         }
         type = "text"
       },
-      "x-amz-bedrock-kb-source-uri" = {
+      x-amz-bedrock-kb-source-uri = {
         fields = {
           keyword = {
             ignore_above = 256
@@ -175,6 +176,39 @@ resource "opensearch_index" "this" {
       }
       year = {
         type = "long"
+      }
+    },
+    settings = {
+      analysis = {
+        tokenizer = {
+          custom_kuromoji_tokenizer = {
+            type = "kuromoji_tokenizer"
+            mode = "search"
+          }
+        },
+        filter = {
+          custom_kuromoji_readingform = {
+            type       = "kuromoji_readingform"
+            use_romaji = true
+          }
+        }
+        analyzer = {
+          kuromoji_analyzer = {
+            tokenizer = "custom_kuromoji_tokenizer",
+            filter = [
+              "kuromoji_baseform",           # 基本形への変換 「美しかった」→「美しい」
+              "kuromoji_part_of_speech",     # 品詞除去 「寿司がおいしいね」→ [寿司, おいしい]
+              "ja_stop",                     # ストップワードの除去 これ、それ、あれ
+              "kuromoji_stemmer",            # 長音除去 サーバー → サーバ
+              "custom_kuromoji_readingform", # 読み仮名付与
+              "kuromoji_number"              # 漢数字の半角数字化
+            ],
+            char_filter = [
+              "icu_normalizer",
+              "kuromoji_iteration_mark"
+            ]
+          }
+        }
       }
     }
   })

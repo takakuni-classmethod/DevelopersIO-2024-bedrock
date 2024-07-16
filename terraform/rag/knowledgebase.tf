@@ -138,6 +138,7 @@ resource "aws_bedrockagent_knowledge_base" "this" {
     aws_iam_role_policy_attachment.knowledge_bases_llm,
     aws_iam_role_policy_attachment.knowledge_bases_datasource,
     aws_iam_role_policy_attachment.knowledge_bases_vectordb,
+    aws_opensearchserverless_access_policy.this_data
   ]
 }
 
