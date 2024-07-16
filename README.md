@@ -50,3 +50,7 @@ Status が `Running` になったら、 Actions から `Open` をクリックし
 Code Editor が起動したら、ラボ環境の立ち上げに成功です！
 
 ![](./images/README/08.png)
+
+[](./handson/02.md)
+
+Next: [環境のデプロイ](./handson/01.md)

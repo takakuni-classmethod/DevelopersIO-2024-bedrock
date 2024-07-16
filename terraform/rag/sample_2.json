@@ -1,0 +1,38 @@
+[
+	{
+		"content": {
+			"text": "Property and equipment, net by segment is as follows (in millions):    December 31,    2021 2022 2023   North America $ 83,640 $ 90,076 $ 93,632  International 21,718 23,347 24,357  AWS 43,245 60,324 72,701.."
+		},
+		"location": {
+			"type": "S3",
+			"s3Location": {
+				"uri": "s3://<bucket_name>/amazon-10k-2023.pdf"
+			}
+		},
+		"score": 0.6389407
+	},
+	{
+		"content": {
+			"text": "Depreciation and amortization expense on property and equipment was $22.9 billion, $24.9 billion, and $30.2 billion which includes amortization of property and equipment acquired under finance leases of $9.9 billion, $6.1 billion, and $5.9 billion for 2021, 2022, and 2023.   54        Table of Contents   Note 4 — LEASES We have entered into non-cancellable operating and finance leases for fulfillment network, data center, office, and physical store facilities as well a..."
+		},
+		"location": {
+			"type": "S3",
+			"s3Location": {
+				"uri": "s3://<bucket_name>/amazon-10k-2023.pdf"
+			}
+		},
+		"score": 0.61908984
+	},
+	{
+		"content": {
+			"text": "Incentives that we receive from property and equipment   vendors are recorded as a reduction to our costs. Property includes buildings and land that we own, along with property we have acquired under build-to-suit lease arrangements when we have control over the building during the construction period and finance lease arrangements..."
+		},
+		"location": {
+			"type": "S3",
+			"s3Location": {
+				"uri": "s3://<bucket_name>/amazon-10k-2023.pdf"
+			}
+		},
+		"score": 0.61353767
+	}
+]
