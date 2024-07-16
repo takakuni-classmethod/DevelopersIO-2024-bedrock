@@ -187,7 +187,7 @@ data "aws_iam_policy_document" "bedrock_logging" {
       "logs:PutLogEvents"
     ]
     resources = [
-      aws_cloudwatch_log_group.this_bedrock.arn
+      "${aws_cloudwatch_log_group.this_bedrock.arn}:log-stream:aws/bedrock/modelinvocations"
     ]
   }
 }
