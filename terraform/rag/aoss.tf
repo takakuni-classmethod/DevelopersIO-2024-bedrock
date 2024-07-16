@@ -123,7 +123,7 @@ resource "opensearch_index" "this" {
       },
       AMAZON_BEDROCK_TEXT_CHUNK = {
         type     = "text",
-        analyzer = "kuromoji_analyzer"
+        analyzer = "custom_kuromoji_analyzer"
       },
       "${local.prefix}-vector" = {
         type      = "knn_vector",
@@ -193,7 +193,7 @@ resource "opensearch_index" "this" {
           }
         }
         analyzer = {
-          kuromoji_analyzer = {
+          custom_kuromoji_analyzer = {
             tokenizer = "custom_kuromoji_tokenizer",
             filter = [
               "kuromoji_baseform",           # 基本形への変換 「美しかった」→「美しい」
