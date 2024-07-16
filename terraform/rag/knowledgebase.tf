@@ -163,7 +163,7 @@ resource "aws_bedrockagent_data_source" "this" {
 # Knowledge Base Log Group
 ########################################################
 resource "aws_cloudwatch_log_group" "this_bedrock" {
-  name = "/aws/bedrock/invoke"
+  name = "/aws/bedrock/${local.prefix}-invoke"
 }
 resource "aws_cloudwatch_log_group" "this_knowledgebase" {
   name = "/aws/bedrock/${aws_bedrockagent_knowledge_base.this.name}"
