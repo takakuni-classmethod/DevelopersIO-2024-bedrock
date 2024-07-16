@@ -53,4 +53,4 @@ Code Editor が起動したら、ラボ環境の立ち上げに成功です！
 
 [](./handson/02.md)
 
-Next: [環境のデプロイ](./handson/01.ipynb)
+Next: [環境のデプロイ](./handson/01.md)
