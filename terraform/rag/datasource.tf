@@ -48,3 +48,13 @@ resource "aws_s3_object" "all_change_account_metadata" {
   source = "../../document/all/change-account.md.metadata.json"
   key    = "all/change-account.md.metadata.json"
 }
+resource "aws_s3_object" "all_expense" {
+  bucket = module.datasource.bucket.id
+  source = "../../document/all/expense.md"
+  key    = "all/expense.md"
+}
+resource "aws_s3_object" "all_expense_metadata" {
+  bucket = module.datasource.bucket.id
+  source = "../../document/all/expense.md.metadata.json"
+  key    = "all/expense.md.metadata.json"
+}
