@@ -121,6 +121,8 @@ resource "aws_bedrockagent_knowledge_base" "this" {
     }
   }
 
+
+
   storage_configuration {
     type = "OPENSEARCH_SERVERLESS"
     opensearch_serverless_configuration {
@@ -155,4 +157,14 @@ resource "aws_bedrockagent_data_source" "this" {
       bucket_arn = module.datasource.bucket.arn
     }
   }
+}
+
+########################################################
+# Knowledge Base Log Group
+########################################################
+resource "aws_cloudwatch_log_group" "this_bedrock" {
+  name = "/aws/bedrock/invoke"
+}
+resource "aws_cloudwatch_log_group" "this_knowledgebase" {
+  name = "/aws/bedrock/${aws_bedrockagent_knowledge_base.this.name}"
 }
