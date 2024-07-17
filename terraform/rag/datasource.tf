@@ -1,3 +1,6 @@
+########################################################
+# S3 Bucket
+########################################################
 module "datasource" {
   source = "../modules/datasource"
   prefix = local.prefix
@@ -6,6 +9,9 @@ module "datasource" {
   }
 }
 
+########################################################
+# S3 Object
+########################################################
 resource "aws_s3_object" "engineer_setup" {
   bucket = module.datasource.bucket.id
   source = "../../document/engineer/01_setup.md"
@@ -58,3 +64,18 @@ resource "aws_s3_object" "all_expense_metadata" {
   source = "../../document/all/expense.md.metadata.json"
   key    = "all/expense.md.metadata.json"
 }
+
+########################################################
+# ログのセクションで利用
+########################################################
+# resource "aws_s3_object" "all_office_guideline" {
+#   bucket = module.datasource.bucket.id
+#   source = "../../document/all/office-guideline.md"
+#   key    = "all/office-guideline.md"
+# }
+
+# resource "aws_s3_object" "all_office_guideline_metadata" {
+#   bucket = module.datasource.bucket.id
+#   source = "../../document/all/office-guideline.md.metadata.json"
+#   key    = "all/office-guideline.md.metadata.json"
+# }
