@@ -86,7 +86,7 @@ resource "aws_opensearchserverless_access_policy" "this_data" {
       Principal = [
         aws_iam_role.knowledge_bases.arn,
         "arn:aws:iam::${local.account_id}:role/cm-takakuni.shinnosuke",
-        "arn:aws:iam::${local.account_id}:role/devio2024-sagemaker-domain"
+        "arn:aws:iam::${local.account_id}:role/devio-2024-sagemaker-domain"
       ]
     }
   ])
